@@ -47,8 +47,8 @@ class telegraf::install {
           gpgkey   => "${telegraf::repo_location}influxdb.key",
           gpgcheck => 1,
         }
+        Yumrepo['influxdata'] -> Package[$telegraf::package_name]
       }
-      Yumrepo['influxdata'] -> Package[$telegraf::package_name]
     }
     'Suse': {
       if $telegraf::manage_archive {
