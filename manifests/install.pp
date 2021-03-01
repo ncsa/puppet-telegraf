@@ -99,8 +99,8 @@ class telegraf::install {
             'source' => "${telegraf::repo_location}influxdb.key",
           },
         }
+        Class['apt::update'] -> Package[$telegraf::package_name]
       }
-      Class['apt::update'] -> Package[$telegraf::package_name]
     }
     'RedHat': {
       if $telegraf::manage_repo {
