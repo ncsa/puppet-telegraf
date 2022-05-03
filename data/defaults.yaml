@@ -4,7 +4,9 @@ lookup_options:
     merge:
       strategy: deep
       merge_hash_arrays: true
+      knockout_prefix: "--"
   'telegraf::outputs':
     merge:
       strategy: deep
       merge_hash_arrays: true
+      knockout_prefix: "--"
