@@ -4,6 +4,72 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v4.2.0](https://github.com/voxpupuli/puppet-telegraf/tree/v4.2.0) (2022-05-13)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-telegraf/compare/v4.1.0...v4.2.0)
+
+**Implemented enhancements:**
+
+- Add FreeBSD support, using telegraf as installed by pkg\(8\) [\#185](https://github.com/voxpupuli/puppet-telegraf/pull/185) ([rvstaveren](https://github.com/rvstaveren))
+- Add support for Debian 11 [\#181](https://github.com/voxpupuli/puppet-telegraf/pull/181) ([ZloeSabo](https://github.com/ZloeSabo))
+- Allow recent dependencies [\#178](https://github.com/voxpupuli/puppet-telegraf/pull/178) ([smortex](https://github.com/smortex))
+
+**Merged pull requests:**
+
+- Remove nodesets [\#187](https://github.com/voxpupuli/puppet-telegraf/pull/187) ([ekohl](https://github.com/ekohl))
+- cleanup .fixtures.yml [\#182](https://github.com/voxpupuli/puppet-telegraf/pull/182) ([bastelfreak](https://github.com/bastelfreak))
+
+## [v4.1.0](https://github.com/voxpupuli/puppet-telegraf/tree/v4.1.0) (2021-07-15)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-telegraf/compare/v4.0.0...v4.1.0)
+
+**Implemented enhancements:**
+
+- allow latest stdlib/apt modules [\#175](https://github.com/voxpupuli/puppet-telegraf/pull/175) ([bastelfreak](https://github.com/bastelfreak))
+- puppet/archive: allow 5.x [\#166](https://github.com/voxpupuli/puppet-telegraf/pull/166) ([bastelfreak](https://github.com/bastelfreak))
+
+**Fixed bugs:**
+
+- make sure the ensure absent works with package install [\#169](https://github.com/voxpupuli/puppet-telegraf/pull/169) ([fe80](https://github.com/fe80))
+- move relationship between package and repo into code block where repo is managed [\#160](https://github.com/voxpupuli/puppet-telegraf/pull/160) ([lukebigum](https://github.com/lukebigum))
+
+**Closed issues:**
+
+- No longer possible to configure tagpass and tagdrop [\#170](https://github.com/voxpupuli/puppet-telegraf/issues/170)
+
+**Merged pull requests:**
+
+- Fix README example 3 + cosmetic updates [\#171](https://github.com/voxpupuli/puppet-telegraf/pull/171) ([thias](https://github.com/thias))
+- Refactor manage\_repo install tests for consistency. [\#165](https://github.com/voxpupuli/puppet-telegraf/pull/165) ([gcoxmoz](https://github.com/gcoxmoz))
+
+## [v4.0.0](https://github.com/voxpupuli/puppet-telegraf/tree/v4.0.0) (2021-02-18)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-telegraf/compare/v3.1.0...v4.0.0)
+
+**Breaking changes:**
+
+- Drop EoL windows server 2008, drop EoL Puppet 5, add Puppet 7 [\#162](https://github.com/voxpupuli/puppet-telegraf/pull/162) ([genebean](https://github.com/genebean))
+- Drop EOL EL6 support [\#159](https://github.com/voxpupuli/puppet-telegraf/pull/159) ([ekohl](https://github.com/ekohl))
+- modulesync 3.0.0 & puppet-lint updates / Drop Debian/Raspbian 8 [\#147](https://github.com/voxpupuli/puppet-telegraf/pull/147) ([bastelfreak](https://github.com/bastelfreak))
+
+**Implemented enhancements:**
+
+- Add support for Darwin [\#161](https://github.com/voxpupuli/puppet-telegraf/pull/161) ([yachub](https://github.com/yachub))
+
+**Fixed bugs:**
+
+- Changed Assign repo-\>package even when manage\_repo=false on Debian+Re… [\#148](https://github.com/voxpupuli/puppet-telegraf/pull/148) ([danielsreichenbach](https://github.com/danielsreichenbach))
+
+**Closed issues:**
+
+- Cannot install telegraf on Windows server because config\_file\_mode and config\_folder\_mode is undefined [\#155](https://github.com/voxpupuli/puppet-telegraf/issues/155)
+- Minor: Please fix the \(\>=5.0.0 \< 7.0.0\) to \(\>= 5.0.0 \< 7.0.0\) in the metadata for dependencies [\#153](https://github.com/voxpupuli/puppet-telegraf/issues/153)
+
+**Merged pull requests:**
+
+- Add Optional to config\_file\_mode and config\_folder\_mode params on windows [\#156](https://github.com/voxpupuli/puppet-telegraf/pull/156) ([jkkitakita](https://github.com/jkkitakita))
+- identical syntax of version range [\#154](https://github.com/voxpupuli/puppet-telegraf/pull/154) ([tuxmea](https://github.com/tuxmea))
+
 ## [v3.1.0](https://github.com/voxpupuli/puppet-telegraf/tree/v3.1.0) (2020-08-22)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-telegraf/compare/v3.0.0...v3.1.0)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'telegraf::input' do
@@ -21,6 +23,10 @@ describe 'telegraf::input' do
         case facts[:kernel]
         when 'windows'
           let(:filename) { "C:/Program Files/telegraf/telegraf.d/#{title}.conf" }
+        when 'Darwin'
+          let(:filename) { "/usr/local/etc/telegraf/telegraf.d/#{title}.conf" }
+        when 'FreeBSD'
+          let(:filename) { "/usr/local/etc/telegraf.d/#{title}.conf" }
         else
           let(:filename) { "/etc/telegraf/telegraf.d/#{title}.conf" }
         end
@@ -40,6 +46,7 @@ describe 'telegraf::input' do
           end
         end
       end
+
       context 'my_snmp' do
         let(:title) { 'my_snmp' }
         let(:params) do
@@ -53,10 +60,10 @@ describe 'telegraf::input' do
                 },
                 'host' => [
                   {
-                    'address'   => 'snmp_host1:161',
+                    'address' => 'snmp_host1:161',
                     'community' => 'read_only',
-                    'version'   => 2,
-                    'get_oids'  => ['1.3.6.1.2.1.1.5']
+                    'version' => 2,
+                    'get_oids' => ['1.3.6.1.2.1.1.5']
                   }
                 ]
               }
@@ -67,6 +74,10 @@ describe 'telegraf::input' do
         case facts[:kernel]
         when 'windows'
           let(:filename) { "C:/Program Files/telegraf/telegraf.d/#{title}.conf" }
+        when 'Darwin'
+          let(:filename) { "/usr/local/etc/telegraf/telegraf.d/#{title}.conf" }
+        when 'FreeBSD'
+          let(:filename) { "/usr/local/etc/telegraf.d/#{title}.conf" }
         else
           let(:filename) { "/etc/telegraf/telegraf.d/#{title}.conf" }
         end
@@ -93,6 +104,7 @@ describe 'telegraf::input' do
           end
         end
       end
+
       context 'my_haproxy' do
         let(:title) { 'my_haproxy' }
         let(:params) do
@@ -104,6 +116,10 @@ describe 'telegraf::input' do
         case facts[:kernel]
         when 'windows'
           let(:filename) { "C:/Program Files/telegraf/telegraf.d/#{title}.conf" }
+        when 'Darwin'
+          let(:filename) { "/usr/local/etc/telegraf/telegraf.d/#{title}.conf" }
+        when 'FreeBSD'
+          let(:filename) { "/usr/local/etc/telegraf.d/#{title}.conf" }
         else
           let(:filename) { "/etc/telegraf/telegraf.d/#{title}.conf" }
         end
@@ -121,6 +137,63 @@ describe 'telegraf::input' do
           it 'notifies the telegraf daemon' do
             is_expected.to contain_file(filename).that_notifies('Class[telegraf::service]')
           end
+        end
+      end
+
+      context 'with ensure absent' do
+        let(:title) { 'my_basicstats' }
+        let(:params) do
+          {
+            ensure: 'absent',
+          }
+        end
+
+        it do
+          dir = case facts[:osfamily]
+                when 'Darwin'
+                  '/usr/local/etc/telegraf/telegraf.d'
+                when 'FreeBSD'
+                  '/usr/local/etc/telegraf.d'
+                when 'windows'
+                  'C:/Program Files/telegraf/telegraf.d'
+                else
+                  '/etc/telegraf/telegraf.d'
+                end
+
+          is_expected.to contain_file("#{dir}/my_basicstats.conf").with(
+            ensure: 'absent'
+          )
+        end
+      end
+
+      context 'with class ensure absent' do
+        let(:pre_condition) do
+          [
+            'class {"telegraf": ensure => absent}',
+          ]
+        end
+        let(:title) { 'my_basicstats' }
+        let(:params) do
+          {
+            ensure: 'present',
+          }
+        end
+
+        it do
+          dir = case facts[:osfamily]
+                when 'Darwin'
+                  '/usr/local/etc/telegraf/telegraf.d'
+                when 'FreeBSD'
+                  '/usr/local/etc/telegraf.d'
+                when 'windows'
+                  'C:/Program Files/telegraf/telegraf.d'
+                else
+                  '/etc/telegraf/telegraf.d'
+                end
+
+          is_expected.to contain_file("#{dir}/my_basicstats.conf").with(
+            ensure: 'absent'
+          )
         end
       end
     end

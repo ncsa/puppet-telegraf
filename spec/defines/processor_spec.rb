@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'telegraf::processor' do
@@ -16,8 +18,8 @@ describe 'telegraf::processor' do
               {
                 'tags' => [
                   {
-                    'key'         => 'foo',
-                    'pattern'     => %r{^a*b+\d$}.source,
+                    'key' => 'foo',
+                    'pattern' => %r{^a*b+\d$}.source,
                     'replacement' => 'c${1}d'
                   }
                 ]
@@ -29,6 +31,10 @@ describe 'telegraf::processor' do
         case facts[:kernel]
         when 'windows'
           let(:filename) { "C:/Program Files/telegraf/telegraf.d/#{title}.conf" }
+        when 'Darwin'
+          let(:filename) { "/usr/local/etc/telegraf/telegraf.d/#{title}.conf" }
+        when 'FreeBSD'
+          let(:filename) { "/usr/local/etc/telegraf.d/#{title}.conf" }
         else
           let(:filename) { "/etc/telegraf/telegraf.d/#{title}.conf" }
         end
@@ -60,12 +66,12 @@ describe 'telegraf::processor' do
               {
                 'mapping' => [
                   {
-                    'field'          => 'status',
-                    'dest'           => 'status_code',
+                    'field' => 'status',
+                    'dest' => 'status_code',
                     'value_mappings' => {
                       'green' => 1,
                       'amber' => 2,
-                      'red'   => 3
+                      'red' => 3
                     }
                   }
                 ]
@@ -77,6 +83,10 @@ describe 'telegraf::processor' do
         case facts[:kernel]
         when 'windows'
           let(:filename) { "C:/Program Files/telegraf/telegraf.d/#{title}.conf" }
+        when 'Darwin'
+          let(:filename) { "/usr/local/etc/telegraf/telegraf.d/#{title}.conf" }
+        when 'FreeBSD'
+          let(:filename) { "/usr/local/etc/telegraf.d/#{title}.conf" }
         else
           let(:filename) { "/etc/telegraf/telegraf.d/#{title}.conf" }
         end
@@ -100,6 +110,63 @@ describe 'telegraf::processor' do
           it 'notifies the telegraf daemon' do
             is_expected.to contain_file(filename).that_notifies('Class[telegraf::service]')
           end
+        end
+      end
+
+      context 'with ensure absent' do
+        let(:title) { 'my_basicstats' }
+        let(:params) do
+          {
+            ensure: 'absent',
+          }
+        end
+
+        it do
+          dir = case facts[:osfamily]
+                when 'Darwin'
+                  '/usr/local/etc/telegraf/telegraf.d'
+                when 'FreeBSD'
+                  '/usr/local/etc/telegraf.d'
+                when 'windows'
+                  'C:/Program Files/telegraf/telegraf.d'
+                else
+                  '/etc/telegraf/telegraf.d'
+                end
+
+          is_expected.to contain_file("#{dir}/my_basicstats.conf").with(
+            ensure: 'absent'
+          )
+        end
+      end
+
+      context 'with class ensure absent' do
+        let(:pre_condition) do
+          [
+            'class {"telegraf": ensure => absent}',
+          ]
+        end
+        let(:title) { 'my_basicstats' }
+        let(:params) do
+          {
+            ensure: 'present',
+          }
+        end
+
+        it do
+          dir = case facts[:osfamily]
+                when 'Darwin'
+                  '/usr/local/etc/telegraf/telegraf.d'
+                when 'FreeBSD'
+                  '/usr/local/etc/telegraf.d'
+                when 'windows'
+                  'C:/Program Files/telegraf/telegraf.d'
+                else
+                  '/etc/telegraf/telegraf.d'
+                end
+
+          is_expected.to contain_file("#{dir}/my_basicstats.conf").with(
+            ensure: 'absent'
+          )
         end
       end
     end

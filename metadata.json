@@ -1,6 +1,6 @@
 {
   "name": "puppet-telegraf",
-  "version": "3.1.1-rc0",
+  "version": "4.2.1-rc0",
   "author": "Vox Pupuli",
   "summary": "Configuration and management of InfluxData's Telegraf metrics collection agent",
   "license": "GPL-3.0",
@@ -16,7 +16,6 @@
     {
       "operatingsystem": "RedHat",
       "operatingsystemrelease": [
-        "6",
         "7",
         "8"
       ]
@@ -32,13 +31,13 @@
       "operatingsystem": "Debian",
       "operatingsystemrelease": [
         "9",
-        "10"
+        "10",
+        "11"
       ]
     },
     {
       "operatingsystem": "CentOS",
       "operatingsystemrelease": [
-        "6",
         "7",
         "8"
       ]
@@ -46,7 +45,6 @@
     {
       "operatingsystem": "OracleLinux",
       "operatingsystemrelease": [
-        "6",
         "7",
         "8"
       ]
@@ -61,8 +59,6 @@
     {
       "operatingsystem": "Windows",
       "operatingsystemrelease": [
-        "Server 2008",
-        "Server 2008 R2",
         "Server 2012",
         "Server 2012 R2"
       ]
@@ -72,26 +68,39 @@
       "operatingsystemrelease": [
         "12"
       ]
+    },
+    {
+      "operatingsystem": "Darwin",
+      "operatingsystemrelease": [
+        "18"
+      ]
+    },
+    {
+      "operatingsystem": "FreeBSD",
+      "operatingsystemrelease": [
+        "12",
+        "13"
+      ]
     }
   ],
   "dependencies": [
     {
       "name": "puppetlabs-stdlib",
-      "version_requirement": ">= 5.0.0 < 7.0.0"
+      "version_requirement": ">= 5.0.0 < 9.0.0"
     },
     {
       "name": "puppetlabs-apt",
-      "version_requirement": ">= 2.0.0 < 8.0.0"
+      "version_requirement": ">= 2.0.0 < 9.0.0"
     },
     {
       "name": "puppet-archive",
-      "version_requirement": ">= 4.0.0 < 5.0.0"
+      "version_requirement": ">= 4.0.0 < 7.0.0"
     }
   ],
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">= 5.5.8 < 7.0.0"
+      "version_requirement": ">= 6.1.0 < 8.0.0"
     }
   ]
 }
