@@ -204,7 +204,7 @@ describe 'telegraf' do
         it {
           is_expected.to contain_yumrepo('influxdata').
             with(
-              baseurl: "https://repos.influxdata.com/rhel/\$releasever/\$basearch/stable"
+              baseurl: "https://repos.influxdata.com/stable/\$basearch/main"
             )
         }
       end
@@ -223,7 +223,7 @@ describe 'telegraf' do
           it {
             is_expected.to contain_yumrepo('influxdata').
               with(
-                baseurl: "https://repos.influxdata.com/rhel/\$releasever/\$basearch/unstable"
+                baseurl: "https://repos.influxdata.com/stable/\$basearch/main"
               )
           }
         end
