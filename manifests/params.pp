@@ -3,6 +3,17 @@
 # A set of default parameters for Telegraf's configuration.
 #
 class telegraf::params {
+  case $facts['architecture'] {
+    'x86_64': {
+      $archive_architecture  = 'amd64'
+    }
+    'AArch64': {
+      $archive_architecture  = 'arm64'
+    } 
+    default: {
+      $archive_architecture  = 'amd64'
+    } 
+  }
   case $facts['os']['family'] {
     'Darwin': {
       $config_file          = '/usr/local/etc/telegraf/telegraf.conf'
@@ -76,8 +87,9 @@ class telegraf::params {
       $manage_archive       = true
       $manage_user          = true
       $archive_install_dir  = '/opt/telegraf'
-      $archive_version      = '1.15.2'
-      $archive_location     = "https://dl.influxdata.com/telegraf/releases/telegraf-${archive_version}_linux_amd64.tar.gz"
+      # LOOK TO SEE IF telegraf::archive_version SPECIFIED IN HIERA, OTHERWISE USE DEFAULT VERSION
+      $archive_version      = lookup('telegraf::archive_version', String, 'first', '1.31.0')
+      $archive_location     = "https://dl.influxdata.com/telegraf/releases/telegraf-${archive_version}_linux_${archive_architecture}.tar.gz"
       $repo_location        = 'https://repos.influxdata.com/'
       $service_enable       = true
       $service_ensure       = running
