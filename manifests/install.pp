@@ -129,21 +129,25 @@ class telegraf::install {
           extract_command => 'tar xfz %s --strip-components=2',
           extract_path    => $telegraf::archive_install_dir,
           source          => $telegraf::archive_location,
+          creates         => "${telegraf::archive_install_dir}/usr/bin/telegraf",
           cleanup         => true,
           require         => File[$telegraf::archive_install_dir],
         }
-        file { '/etc/telegraf':
-          ensure => directory,
-        }
-        if $telegraf::manage_user {
-          group { $telegraf::config_file_group:
-            ensure => present,
-          }
-          user { $telegraf::config_file_owner:
-            ensure => present,
-            gid    => $telegraf::config_file_group,
-          }
-        }
+        #ensure_resource( 'file', '/etc/telegraf', { ensure => 'directory', } )
+        #file { '/etc/telegraf':
+        #  ensure => directory,
+        #}
+        #if $telegraf::manage_user {
+        #  ensure_resource( 'group', $telegraf::config_file_group, { ensure => 'present', } )
+        #  group { $telegraf::config_file_group:
+        #    ensure => present,
+        #  }
+        #  ensure_resource( 'user', $telegraf::config_file_owner, { ensure => 'present', gid => $telegraf::config_file_group, } )
+        #  user { $telegraf::config_file_owner:
+        #    ensure => present,
+        #    gid    => $telegraf::config_file_group,
+        #  }
+        #}
         file { '/etc/systemd/system/telegraf.service':
           ensure => file,
           source => 'puppet:///modules/telegraf/telegraf.service',
